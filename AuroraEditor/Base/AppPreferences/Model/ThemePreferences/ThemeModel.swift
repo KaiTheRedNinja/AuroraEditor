@@ -18,6 +18,9 @@ public final class ThemeModel: ObservableObject {
 
     public static let shared: ThemeModel = .init()
 
+    public var globalDark: AuroraTheme!
+    public var globalLight: AuroraTheme!
+
     /// The selected appearance in the sidebar.
     /// - **0**: dark mode themes
     /// - **1**: light mode themes
@@ -152,8 +155,8 @@ public final class ThemeModel: ObservableObject {
 
     private func loadBundledThemes() throws {
         let bundledThemeNames: [String] = [
-            "auroraeditor-xcode-dark.json",
-            "auroraeditor-xcode-light.json",
+            "auroraeditor-global-dark.json",
+            "auroraeditor-global-light.json",
             "auroraeditor-github-dark.json",
             "auroraeditor-github-light.json",
             "creeper.tmTheme"
@@ -173,6 +176,12 @@ public final class ThemeModel: ObservableObject {
                     Log.error(error)
                     throw error
                 }
+            }
+
+            if themeName == bundledThemeNames[0] {
+                globalDark = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
+            } else if themeName == bundledThemeNames[1] {
+                globalLight = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
             }
         }
     }
