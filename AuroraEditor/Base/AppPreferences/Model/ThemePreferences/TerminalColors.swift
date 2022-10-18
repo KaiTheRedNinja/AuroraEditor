@@ -163,7 +163,7 @@ public extension AuroraTheme {
             self.brightWhite = brightWhite
         }
 
-        public static let defaultDark: TerminalColors = ThemeModel.shared.globalDark.terminal
-        public static let defaultLight: TerminalColors = ThemeModel.shared.globalLight.terminal
+        public static let defaultDark: TerminalColors = ThemeModel.globalDark.terminal
+        public static let defaultLight: TerminalColors = ThemeModel.globalLight.terminal
     }
 }

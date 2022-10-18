@@ -147,12 +147,31 @@ public struct ThemePreferencesView: View {
 
     private var sidebarBottomToolbar: some View {
         HStack {
-            Button {} label: {
+            Menu {
+                Button("New Blank Theme") {
+
+                }
+                Button("Import Aurora Theme") {
+                    importTheme(type: .aeTheme)
+                }
+                Button("Import VSCode Theme") {
+                    importTheme(type: .vscode)
+                }
+                Button("Import Textmate/Sublime Theme") {
+                    importTheme(type: .textmate)
+                }
+                Button("Open old format Aurora Theme") {
+                    importTheme(type: .oldAETheme)
+                }
+            } label: {
                 Image(systemName: "plus")
             }
-            .disabled(true)
-            .help("Not yet implemented")
+            .frame(width: 20)
+            .help("Add theme")
+            .menuStyle(.borderlessButton)
             .buttonStyle(.plain)
+            .menuIndicator(.hidden)
+
             Button {
                 themeModel.delete(themeModel.selectedTheme!)
             } label: {

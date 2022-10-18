@@ -196,4 +196,11 @@ public extension AuroraTheme {
             }
         }
     }
+
+    enum ThemeFormat: String {
+        case aeTheme = "Aurora Theme"
+        case vscode = "VSCode Theme"
+        case textmate = "TextMate Theme"
+        case oldAETheme = "Old Aurora Theme"
+    }
 }

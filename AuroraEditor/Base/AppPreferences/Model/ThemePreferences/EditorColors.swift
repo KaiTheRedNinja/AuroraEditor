@@ -113,7 +113,7 @@ public extension AuroraTheme {
             self.highlightTheme = (try? container.decode(HighlightTheme.self, forKey: .highlightTheme)) ?? .default
         }
 
-        public static let defaultDark: EditorColors = ThemeModel.shared.globalDark.editor
-        public static let defaultLight: EditorColors = ThemeModel.shared.globalLight.editor
+        public static let defaultDark: EditorColors = ThemeModel.globalDark.editor
+        public static let defaultLight: EditorColors = ThemeModel.globalLight.editor
     }
 }

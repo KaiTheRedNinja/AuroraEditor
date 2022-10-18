@@ -18,8 +18,9 @@ public final class ThemeModel: ObservableObject {
 
     public static let shared: ThemeModel = .init()
 
-    public var globalDark: AuroraTheme!
-    public var globalLight: AuroraTheme!
+    // These are static to avoid reading from them before ThemeModel.shared is initialised
+    static var globalDark: AuroraTheme!
+    static var globalLight: AuroraTheme!
 
     /// The selected appearance in the sidebar.
     /// - **0**: dark mode themes
@@ -59,20 +60,17 @@ public final class ThemeModel: ObservableObject {
 
     /// Only themes where ``Theme/appearance`` == ``Theme/ThemeType/dark``
     public var darkThemes: [AuroraTheme] {
-        Log.info("Dark themes requested")
-        return themes.filter { $0.appearance == .dark }
+        themes.filter { $0.appearance == .dark }
     }
 
     /// Only themes where ``Theme/appearance`` == ``Theme/ThemeType/light``
     public var lightThemes: [AuroraTheme] {
-        Log.info("Light themes requested")
-        return themes.filter { $0.appearance == .light }
+        themes.filter { $0.appearance == .light }
     }
 
     /// Only themes where ``Theme/appearance`` == ``Theme/ThemeType/universal``
     public var universalThemes: [AuroraTheme] {
-        Log.info("Universal themes requested")
-        return themes.filter { $0.appearance == .universal }
+        themes.filter { $0.appearance == .universal }
     }
 
     private init() {
@@ -169,8 +167,7 @@ public final class ThemeModel: ObservableObject {
             do {
                 // NOTE: This WILL fail if the theme already exists. This is intentional behaviour,
                 // and prevents theme overriding.
-                try filemanager.copyItem(at: defaultUrl,
-                                         to: themesURL.appendingPathComponent(themeName))
+                try copyTheme(at: defaultUrl, named: themeName)
             } catch {
                 if !error.localizedDescription.contains("because an item with the same name already exists.") {
                     Log.error(error)
@@ -179,11 +176,16 @@ public final class ThemeModel: ObservableObject {
             }
 
             if themeName == bundledThemeNames[0] {
-                globalDark = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
+                ThemeModel.globalDark = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
             } else if themeName == bundledThemeNames[1] {
-                globalLight = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
+                ThemeModel.globalLight = ThemeJsonLoader.shared.loadOldAEThemeJson(from: defaultUrl)
             }
         }
+    }
+
+    func copyTheme(at sourceURL: URL, named themeName: String) throws {
+        try filemanager.copyItem(at: sourceURL,
+                                 to: themesURL.appendingPathComponent(themeName))
     }
 
     /// Removes all overrides of the given theme in

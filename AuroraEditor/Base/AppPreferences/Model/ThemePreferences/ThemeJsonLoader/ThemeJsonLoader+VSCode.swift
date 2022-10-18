@@ -32,16 +32,17 @@ extension ThemeJsonLoader {
               let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
         else { return nil }
 
-        // vscode themes need to contain a `name` and a `type`,
-        // and optionally a `colors` and `settings` field
+        // vscode themes need to contain a `name` and a `type`.
+        // not all vscode themes have a `settings` field, but AE requires it.
+        // `colors` are optional.
 
         let name = json["name"] as? String
+        let colors = (json["colors"] as? [String: String]) ?? [:]
+
         guard let type = json["type"] as? String,
+              let settings = ((json["settings"] ?? json["tokenColors"]) as? [[String: Any]]),
               type == "light" || type == "dark"
         else { return nil }
-
-        let colors = (json["colors"] as? [String: String]) ?? [:]
-        let settings = ((json["settings"] ?? json["tokenColors"]) as? [[String: Any]]) ?? []
 
         // get the HighlightTheme and EditorColors
         let highlightTheme = highlightThemeFromJson(json: settings)
