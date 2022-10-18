@@ -19,9 +19,7 @@ extension ThemeJsonLoader {
         do {
             let data = try Data(contentsOf: url)
             return themeFromOldAEThemeJson(jsonStr: String(decoding: data, as: UTF8.self))
-        } catch {
-            Log.info("Error loading theme: \(String(describing: error))")
-        }
+        } catch {}
 
         return nil
     }
@@ -29,10 +27,7 @@ extension ThemeJsonLoader {
     public func themeFromOldAEThemeJson(jsonStr: String) -> AuroraTheme? {
         guard let jsonData = jsonStr.data(using: .utf8),
               let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-        else {
-            Log.info("Failed to load vsc json")
-            return nil
-        }
+        else { return nil }
 
         // All old AEThemes are exactly the same, containing the following fields:
         // author, distributionURL, version, license, type, name, displayName, description,

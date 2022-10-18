@@ -63,7 +63,7 @@ class GrammarJsonLoader {
         guard let jsonData = jsonStr.data(using: .utf8),
               let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
         else {
-            Log.info("Failed to load json")
+            Log.info("Failed to load grammar json")
             return nil
         }
 

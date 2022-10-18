@@ -30,10 +30,7 @@ extension ThemeJsonLoader {
     public func themeFromVscJson(jsonStr: String) -> AuroraTheme? {
         guard let jsonData = jsonStr.data(using: .utf8),
               let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-        else {
-            Log.info("Failed to load vsc json")
-            return nil
-        }
+        else { return nil }
 
         // vscode themes need to contain a `name` and a `type`,
         // and optionally a `colors` and `settings` field

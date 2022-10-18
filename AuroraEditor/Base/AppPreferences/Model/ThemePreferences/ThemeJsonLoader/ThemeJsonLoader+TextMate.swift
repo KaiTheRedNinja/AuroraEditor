@@ -31,10 +31,7 @@ extension ThemeJsonLoader {
             guard let json = try PropertyListSerialization.propertyList(from: data,
                                                                         options: .mutableContainers,
                                                                         format: nil) as? [String: Any]
-            else {
-                Log.info("Failed to read plist for \(url)")
-                return nil
-            }
+            else { return nil }
 
             return themeFromTmThemeJson(json: json)
         } catch {
