@@ -113,7 +113,8 @@ public final class ThemeModel: ObservableObject {
         try content.forEach { file in
             let fileURL = url.appendingPathComponent(file)
             Log.info("Loading \(fileURL)")
-            if var theme = ThemeJsonLoader.shared.loadOldAEThemeJson(from: fileURL) ??
+            if var theme = ThemeJsonLoader.shared.loadAETheme(from: fileURL) ??
+                           ThemeJsonLoader.shared.loadOldAEThemeJson(from: fileURL) ??
                            ThemeJsonLoader.shared.loadVscJson(from: fileURL) ??
                            ThemeJsonLoader.shared.loadTmThemeXml(from: fileURL) {
 

@@ -36,7 +36,7 @@ extension ThemePreferencesView {
                 switch type {
                 case .aeTheme:
                     // TODO: Load AuroraTheme from JSON
-                    break
+                    theme = ThemeJsonLoader.shared.loadAETheme(from: url)
                 case .vscode:
                     theme = ThemeJsonLoader.shared.loadVscJson(from: url)
                 case .textmate:

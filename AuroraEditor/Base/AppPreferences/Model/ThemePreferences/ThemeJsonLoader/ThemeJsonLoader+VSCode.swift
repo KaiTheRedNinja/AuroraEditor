@@ -20,9 +20,7 @@ extension ThemeJsonLoader {
         do {
             let data = try Data(contentsOf: url)
             return themeFromVscJson(jsonStr: String(decoding: data, as: UTF8.self))
-        } catch {
-            Log.info("Error loading theme: \(String(describing: error))")
-        }
+        } catch {}
 
         return nil
     }

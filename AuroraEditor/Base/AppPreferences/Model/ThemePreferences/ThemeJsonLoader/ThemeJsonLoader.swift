@@ -18,6 +18,15 @@ class ThemeJsonLoader {
 
     typealias Attributes = AuroraTheme.Attributes
 
+    func loadAETheme(from url: URL) -> AuroraTheme? {
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode(AuroraTheme.self, from: data)
+        } catch {}
+
+        return nil
+    }
+
     /// Function that turns a JSON array into a ``HighlightTheme``.
     ///
     /// All textmate-based theme systems utilise the same format of themes, namely an array of
